@@ -5,12 +5,12 @@ I am currently doing my master's in computer science at UdeM in the bioinformati
 
 ## Tools
 I would like to learn these tools (and more) through the project:
-*Docker
-*nilearn
-*Compute canada servers
-*git/github
-*data visualization tools
-*statistics tools (especially for genetics)
+ *Docker
+ *nilearn
+ *Compute canada servers
+ *git/github
+ *data visualization tools
+ *statistics tools (especially for genetics)
 
 ## Data
 I would like to work with a dataset on the extent of variation in healthy brains, on addiction, or on mental health that has a genetic component.
