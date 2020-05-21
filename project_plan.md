@@ -33,6 +33,13 @@ https://www.sciencedirect.com/science/article/pii/S1053811919301594
 Integrated morphometric, molecular, and clinical characterization of Parkinson’s disease pathology (similarity network fusion)
 https://www.biorxiv.org/content/10.1101/2020.03.05.979526v1
 
+### HCP dataset descriptions
+Extensively preprocessed megatrawl
+https://db.humanconnectome.org/megatrawl/index.html
+
+HCP data dictionary
+https://wiki.humanconnectome.org/display/PublicData/HCP+Data+Dictionary+Public-+Updated+for+the+1200+Subject+Release
+
 ### Resting state fMRI characteristics of neuropsychiatric disorders
 Linked Dimensions of Psychopathology and Connectivity in Functional Brain Networks
 https://www.nature.com/articles/s41467-018-05317-y
