@@ -1,6 +1,6 @@
 # Project definition
 
-! [JR Bee illustration] (/harveyaa_fMRI_neuroticism/Connectome_quanta_mag.png)
+! [JR Bee illustration](Connectome_quanta_mag.png)
 
 ## Background
 I am a currently doing my master's in computer science at UdeM in the bioinformatics stream. I haven't locked down my thesis project yet but it will involve the impact of rare genetic variants on functional connectivity. I did my undergrad in math and have a pretty good basis in coding in python and machine learning, but I am totally new to neuroscience and very excited about brainhack school.
