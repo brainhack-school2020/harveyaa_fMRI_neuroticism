@@ -15,7 +15,7 @@ I'm interested in variation in human brains and am curious about neuropsychiatri
 
 ## Tools
 I plan on using the following tools:
- * compute canada servers
+ * compute canada servers with globus and aws s3 for file access and transfer
  * nilearn
  * similarity network fusion
  * sklearn
