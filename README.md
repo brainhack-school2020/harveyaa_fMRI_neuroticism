@@ -20,6 +20,9 @@ I plan on using the following tools:
  * similarity network fusion
  * sklearn
  * Data visualization
+ 
+## Learning Goals
+I especially want to use brainhack school to learn to work with fMRI data, explore different parcellation methods and ways to produce features from connectivity matrices. I also want to learn to use compute canada servers, and to improve and explore my coding skills and to learn tools for open science and reproducibility.
 
 ## Data
 I will use the HCP 1200 healthy young adult dataset.
