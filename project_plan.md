@@ -3,6 +3,8 @@
 2. Do some exploratory analysis with a (tiny) of the data to establish a pipeline
     1. Parcellation resolution? Dynamic parcellation (dypac?)
     2. Connectivity matrices
+    3. Features for prediction
+    4. ML algorithm for prediction (random forest?)
 3. Write scripts to run pipeline on compute canada
 4. Analyze results
 
