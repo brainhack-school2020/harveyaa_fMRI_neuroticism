@@ -1,24 +1,25 @@
 # Project definition
 
 ## Background
-I am currently doing my master's in computer science at UdeM in the bioinformatics stream. For my master's I will be looking at rare genetic variants (CNVs, SNPs), functional connectivity, methods for dimensionality reduction of fMRI data so I would like to create a brainhack school project that allows me to learn some of the tools I'll need. 
-<!-- I am very interested in the extent of variation in human brains and if there is a continuous expression from "healthy" to "pathological" brains.
-I want to explore the variation in brains by looking at fMRI data from the UK bio bank:
-1. Take a pathology linked to neuroticism (psychosis, schizophrenia?) (big five personality traits) that can be robustly predicted from fmri
-2. compare with healthy brains with ranging levels of neuroticism to see if there is a range in connectivity patterns from standard to extreme
--->
-<!--Use UK bio bank resting state fMRI data for alcoholics and non-alcoholics and see if alcoholics can be accurately predicted, see if can include genetic component -->
+I am a currently doing my master's in computer science at UdeM in the bioinformatics stream. I haven't locked down my thesis project yet but it will involve the impact of rare genetic variants on functional connectivity. I did my undergrad in math and have a pretty good basis in coding in python and machine learning, but I am totally new to neuroscience and very excited about brainhack school.
+
+I'm interested in variation in human brains and am curious about neuropsychiatric disorders as extremes of characterestics that are found in the overall population. To explore this idea, I want to look at the human connectome project dataset of 1200 healthy young adults that includes resting state fMRI and personality/behaviour data. Specifically, I want to try and predict neuroticism, one of the big five personality traits that is associated with mental disorders, from fMRI to see if:
+1. If there are significant/consistent markers for neuroticism in fMRI data.
+2. If so, how do they compare to findings about schizophrenia/anxiety/depression/ADHD in the literature.
+
+<!-- Possibly try to predict other behavioural features-->
+<!-- I find trying to predict neuroticism especially interesting because we know that the changes in connectivity due to neuropsychiatric disorders are not specific, so it seems likely that if there is a pattern for neuroticism that it would be similar.-->
 
 ## Tools
-I would like to learn these tools through the project:
- * Docker
+I plan on using the following tools:
+ * compute canada servers
  * nilearn
- * Compute canada servers
- * git/github
- * data visualization tools
+ * similarity network fusion
+ * sklearn
+ * Data visualization
 
 ## Data
-I would like to work with data from the UK bio bank.
+I will use the HCP 1200 healthy young adult dataset.
 
 ## Deliverables
-I would like to produce a docker container, jupyter notebooks, an interactive data visualization, and a script for running jobs on compute canada servers.
+I would like to produce jupyter notebooks with examples of the analysis code, an interactive data visualization, and a script for running jobs on compute canada servers.
