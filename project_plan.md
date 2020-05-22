@@ -1,9 +1,9 @@
 ## Steps:
 1. Access HCP data
 2. Do some exploratory analysis with a (tiny) of the data to establish a pipeline
-    1. Parcellation resolution? Dynamic parcellation (dypac?)
+    1. Parcellation resolution?
     2. Connectivity matrices
-    3. Features for prediction
+    3. Features for prediction Dynamic parcellation (dypac?)
     4. ML algorithm for prediction (random forest?)
 3. Write scripts to run pipeline on compute canada
 4. Analyze results
