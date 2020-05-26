@@ -6,18 +6,18 @@ and downloaded Aspera Plugin (it was requested by the website for the download p
 Then, in the main menu we chose the WU-Minn HCP Data -1200 subjects and clicked on “Explore Subjects”, 
 so we can choose subjects according to specific filters.
 
-![Pic – Data1]
+![Pic – Data1](https://github.com/brainhack-school2020/harveyaa_fMRI_neuroticism/blob/master/Data1.JPG)
 
 We chose 3T data set, and added a filter according to the subjects’ personality scores. 
 We wanted to have subjects who got extreme scores for Neuroticism.
 
-Pic – Data2
+![Pic – Data2](https://github.com/brainhack-school2020/harveyaa_fMRI_neuroticism/blob/master/Data2.JPG)
 
 Then, we clicked on the “download image” (on the right side of the screen). 
 This will transfer you to a page where you can download the specific package which you requested. 
 We then asked for a “Resting State Denoised” – preprocessed data of the specific subjects that we chose. 
 After this, we downloaded the package.
 
-Pic - Data3
+![Pic – Data3](https://github.com/brainhack-school2020/harveyaa_fMRI_neuroticism/blob/master/Data3.JPG)
 
 Each subject has his own Zip file which you have to extract and only then you can work with the data.
