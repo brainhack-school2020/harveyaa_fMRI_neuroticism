@@ -2,10 +2,11 @@
 
 Prior to the download, we registered to [the HCP website](https://db.humanconnectome.org/)
 and downloaded Aspera Plugin (it was requested by the website for the download process).
-In the main menu we chose the WU-Minn HCP Data -1200 subjects and clicked on “Explore Subjects”, 
+
+Then, in the main menu we chose the WU-Minn HCP Data -1200 subjects and clicked on “Explore Subjects”, 
 so we can choose subjects according to specific filters.
 
-Pic – Data1
+![Pic – Data1]
 
 We chose 3T data set, and added a filter according to the subjects’ personality scores. 
 We wanted to have subjects who got extreme scores for Neuroticism.
