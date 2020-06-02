@@ -4,7 +4,7 @@ from argparse import ArgumentParser
 import numpy as np
 import pandas as pd
 from scipy.stats import pearsonr
-from sklearn.model_selection import KFold
+from sklearn.model_selection import LeaveOneOut
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 
@@ -36,7 +36,7 @@ def get_scores(mat, edges):
     mask[edges]=1
     return np.matmul(mat,mask)
 
-def leave_one_out_CPM(mat,y):
+def leave_one_out_CPM(mat,y,thresh=0.01):
     n_subjects = mat.shape[0]
     n_edges = mat.shape[1]
 
@@ -45,14 +45,18 @@ def leave_one_out_CPM(mat,y):
     #for each edge number of subjects for which it was significantly correlated
     edge_count = np.zeros((n_edges,3))
     
-    kf = KFold(n_splits=n_subjects,shuffle=True)
+    loo = LeaveOneOut()
     i = 0
-    for train_index,test_index in kf.split(mat):
+    for train_index,test_index in loo.split(mat):
         mat_train, mat_test = mat[train_index], mat[test_index]
         y_train, y_test = y[train_index], y[test_index]
+        #For each of 200x200 edges across subjects find the correlation with neuroticism score
         corr = correlate_edges(mat_train,y_train)
-        sig_edges, pos_edges, neg_edges = filter_edges(corr)
+        #Filter edges to significantly correlated (p value below threshold), then into positive and negative correlation
+        sig_edges, pos_edges, neg_edges = filter_edges(corr,thresh)
         
+        #Create binary masks edges, for each subject count up the values of those edges in their connectivity matrices
+        #equivalent to the dot product between the mask and their connectivity matrix (both flattened)
         #use all significant edges in summary score
         combined_scores_train = get_scores(mat_train,sig_edges).reshape(-1,1)
         combined_scores_test = get_scores(mat_test,sig_edges).reshape(-1,1)
@@ -103,15 +107,14 @@ if __name__ == "__main__":
     
     pred, edge_count = leave_one_out_CPM(netmats,neuroticism)
 
-    MSE = [['combined','positive','negative','multiple_reg'],
-           [mean_squared_error(neuroticism,pred[:,0]),
-            mean_squared_error(neuroticism,pred[:,1]),
-           mean_squared_error(neuroticism,pred[:,2]),
-           mean_squared_error(neuroticism,pred[:,3])]]
+    MSE = [['combined',mean_squared_error(neuroticism,pred[:,0])],
+            ['positive',mean_squared_error(neuroticism,pred[:,1])],
+           ['negative',mean_squared_error(neuroticism,pred[:,2])],
+           ['multiple_reg',mean_squared_error(neuroticism,pred[:,3])]]
 
     
     #TODO: WRITE DATA OUT
     print(MSE)
+    pd.DataFrame(columns = ['type','MSE']).to_csv('neuroticism_MSE.csv')
     np.savetxt('neuroticism_edge_count.csv',edge_count)
-    np.savetxt('neuroticism_MSE.csv',MSE)
     np.savetxt('neuroticism_predictions.csv',pred)
