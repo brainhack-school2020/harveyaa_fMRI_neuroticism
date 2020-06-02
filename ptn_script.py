@@ -1,12 +1,10 @@
 #!/usr/bin/env python
 
+from argparse import ArgumentParser
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-from nilearn import image, plotting
 from scipy.stats import pearsonr
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import KFold
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 
@@ -16,7 +14,7 @@ def correlate_edges(mat,y):
 
     for i in range(mat.shape[1]):
         #correlation, p value
-        edge_corr[i,0], edge_corr[i,1] = pearsonr(netmats_train[:,i],b_train)
+        edge_corr[i,0], edge_corr[i,1] = pearsonr(mat[:,i],y)
         #if edge is all zeros, replace the nan value with 0 and set the pvalue to 1 so we ignore it
         if(np.isnan(edge_corr[i,0])): 
             edge_corr[i,0] = 0
@@ -31,44 +29,89 @@ def filter_edges(correlations, thresh=0.01):
     neg_edges = sig_edges[sig_edges['corr']<0].index.tolist()
     sig_edges = sig_edges.index.tolist()
     return sig_edges, pos_edges, neg_edges
-
+    
 #mat is shape n_subjectsXn_edges edges is a list of chosen edges
 def get_scores(mat, edges):
-    mask = np.zeros(net.shape[1])
+    mask = np.zeros(mat.shape[1])
     mask[edges]=1
     return np.matmul(mat,mask)
 
+def leave_one_out_CPM(mat,y):
+    n_subjects = mat.shape[0]
+    n_edges = mat.shape[1]
+
+    #combined, positive, negative, multiple
+    prediction = np.zeros((n_subjects,4))
+    #for each edge number of subjects for which it was significantly correlated
+    edge_count = np.zeros((n_edges,3))
+    
+    kf = KFold(n_splits=n_subjects,shuffle=True)
+    i = 0
+    for train_index,test_index in kf.split(mat):
+        mat_train, mat_test = mat[train_index], mat[test_index]
+        y_train, y_test = y[train_index], y[test_index]
+        corr = correlate_edges(mat_train,y_train)
+        sig_edges, pos_edges, neg_edges = filter_edges(corr)
+        
+        #use all significant edges in summary score
+        combined_scores_train = get_scores(mat_train,sig_edges).reshape(-1,1)
+        combined_scores_test = get_scores(mat_test,sig_edges).reshape(-1,1)
+        #use only positive significant edges
+        positive_scores_train = get_scores(mat_train,pos_edges).reshape(-1,1)
+        positive_scores_test = get_scores(mat_test,pos_edges).reshape(-1,1)
+        #use only negative significant edges
+        negative_scores_train = get_scores(mat_train,neg_edges).reshape(-1,1)
+        negative_scores_test = get_scores(mat_test,neg_edges).reshape(-1,1)
+        #combine pos and neg scores in multiple regression
+        multiple_reg_scores_train = np.concatenate((positive_scores_train,negative_scores_train),axis=1)
+        multiple_reg_scores_test = np.concatenate((positive_scores_test,negative_scores_test),axis=1)
+
+        combined_model = LinearRegression().fit(combined_scores_train,y_train.reshape(-1,1))
+        positive_model = LinearRegression().fit(positive_scores_train,y_train.reshape(-1,1))
+        negative_model = LinearRegression().fit(negative_scores_train,y_train.reshape(-1,1))        
+        multiple_reg_model = LinearRegression().fit(multiple_reg_scores_train,y_train.reshape(-1,1))
+        
+        #count how many times each edge is significant for each type of edges
+        mask = np.zeros((n_edges,3))
+        mask[sig_edges,0]=1
+        mask[pos_edges,1]=1
+        mask[neg_edges,2]=1
+        edge_count = edge_count + mask
+
+        prediction[i,0]=combined_model.predict(combined_scores_test)
+        prediction[i,1]=positive_model.predict(positive_scores_test)
+        prediction[i,2]=negative_model.predict(negative_scores_test)
+        prediction[i,3]=multiple_reg_model.predict(multiple_reg_scores_test)
+        
+        if (i%10 ==0): print('CPM fold: ',i)
+        i = i+1
+    return prediction,edge_count
+        
 if __name__ == "__main__":
+    parser = ArgumentParser()
+    parser.add_argument("--netmats_file",help="Path to netmats file",dest='netmats_file')
+    
+    parser.add_argument("--traits_file",help="Path to personality traits file",dest='traits_file')
+ 
+    args = parser.parse_args()
+    print('loading data...')
     # connectivity matrices, 200x200 matrices in vector 810 subjects (shape 810x40000)
-    netmats = np.loadtxt('netmats2_clean.txt')
-    neuroticism = np.loadtxt('neuroticism.csv',skiprows=1,delimiter = ',')
+    netmats = np.loadtxt(args.netmats_file)
+    traits = pd.read_csv(args.traits_file, index_col=0)
+    neuroticism = traits['NEOFAC_N'].to_numpy()
 
-    netmats_train, netmats_test, neuro_train, neuro_test = train_test_split(netmats,neuroticism)
+    
+    pred, edge_count = leave_one_out_CPM(netmats,neuroticism)
 
-    edge_correlations = correlate_edges(netmats_train,neuro_train)
-    significant_edges, positive_edges, negative_edges = filter_edges(edge_correlations)
+    MSE = [['combined','positive','negative','multiple_reg'],
+           [mean_squared_error(neuroticism,pred[:,0]),
+            mean_squared_error(neuroticism,pred[:,1]),
+           mean_squared_error(neuroticism,pred[:,2]),
+           mean_squared_error(neuroticism,pred[:,3])]]
 
-    positive_scores_train = get_scores(netmats_train,positive_edges).reshape(-1,1)
-    positive_scores_test = get_scores(netmats_test,positive_edges).reshape(-1,1)
-    negative_scores_train = get_scores(netmats_train,negative_edges).reshape(-1,1)
-    negative_scores_test = get_scores(netmats_test,negative_edges).reshape(-1,1)
-
-    #positive correlation scores
-    positive_model = LinearRegression().fit(positive_scores_train,neuro_train.renshape(-1,1))
-    positive_pred = positive_model.predict(positive_scores_test)
-
-    #negative correlation scores
-    negative_model = LinearRegression().fit(negative_scores_train,neuro_train.renshape(-1,1))
-    negative_pred = positive_model.predict(negative_scores_test)
-
-    #use both scores in multiple regression
-    both_scores_train = np.concatenate((positive_scores_train,negative_scores_train),axis=1)
-    both_scores_test = np.concatenate((positive_scores_test,negative_scores_test),axis=1)
-    both_model = LinearRegression().fit(both_scores_train,neuro_train.reshape(-1,1))
-    both_pred = multi_model.predict(both_scores_test)
-
-    MSE = {'positive':mean_squared_error(neuro_test,positive_pred),
-           'negative':mean_squared_error(neuro_test,negative_pred),
-           'both':mean_squared_error(neuro_test,both_pred)}
-
-    #WRITE DATA OUT
+    
+    #TODO: WRITE DATA OUT
+    print(MSE)
+    np.savetxt('neuroticism_edge_count.csv',edge_count)
+    np.savetxt('neuroticism_MSE.csv',MSE)
+    np.savetxt('neuroticism_predictions.csv',pred)
