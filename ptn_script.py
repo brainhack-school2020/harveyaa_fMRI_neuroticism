@@ -10,8 +10,22 @@ from sklearn.svm import SVR
 from sklearn.metrics import mean_squared_error
 import warnings
 
-#mat is shape n_subjectsXn_edges y is shape n_edges
 def correlate_edges(mat,y):
+    """
+    Correlation between edges in connectivity matrices and feature being predicted.
+    Inputs
+    -------
+    mat: ndarray (n_subjects,n_edges)
+        flattened connectivity matrix for each subject
+    y: ndarray (n_subjects,)
+        feature being predicted for each subject
+    Returns
+    -------
+    edge_corr: ndarray (n_edges,2)
+        correlations and p-value for each edge
+        edge_corr[i,0] correlation
+        edge_corr[i,1] p-value
+    """
     edge_corr = np.zeros((mat.shape[1],2))    
 
     for i in range(mat.shape[1]):
@@ -23,8 +37,26 @@ def correlate_edges(mat,y):
             edge_corr[i,1] = 1
     return edge_corr
 
-#correlations is shape n_edgesX2
 def filter_edges(correlations, thresh=0.01):
+    """
+    Filter edges based on p-value, then by positive or negative correlation.
+    Inputs
+    -------
+    correlations: ndarray (n_edges,2)
+        correlations and p-value for each edge
+        edge_corr[i,0] correlation
+        edge_corr[i,1] p-value
+    y: ndarray (n_subjects,)
+        feature being predicted for each subject
+    Returns
+    -------
+    sig_edges: list
+        all significantly correlated edges
+    pos_edges: list
+        significantly positively correlated edges
+    neg_edges: list
+        significantly negatively correlated edges
+    """
     edges = pd.DataFrame(correlations, columns = ['corr','p'])
     sig_edges = edges[edges['p']<thresh]
     pos_edges = sig_edges[sig_edges['corr']>0].index.tolist()
@@ -34,6 +66,19 @@ def filter_edges(correlations, thresh=0.01):
     
 #mat is shape n_subjectsXn_edges edges is a list of chosen edges
 def get_scores(mat, edges):
+    """
+    Produces summary scores for CPM
+    Inputs
+    -------
+    mat: ndarray (n_subjects,n_edges)
+        flattened connectivity matrix for each subject
+    edges: list
+        selected edges to use in score calculation
+    Returns
+    -------
+    float
+        summary score for CPM
+    """
     mask = np.zeros(mat.shape[1])
     mask[edges]=1
     return np.matmul(mat,mask)
