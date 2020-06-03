@@ -28,7 +28,7 @@ We need to restrict the behavioural data from all the subjects to the 812 in the
 If you have the space and time! This is slow on my laptop, and takes about 1gb of memory.
 * run ./run_script_locally.sh in the same directory as the files all_traits.csv and netmats2_clean.txt
 * it outputs files in the format NEOFAC_<trait>_<method>_predictions.csv and NEOFAC_<trait>_<method>_MSE.csv
-  *traits are: N - neuroticism, A - agreeableness, O - openness, C - conscientiousness, E - extraversion
-  *methods are: CPM - connectome based predictive modelling, LR - linear regression, SVR - support vector regression
-  *predictions and MSE are returned in a format that is documented in ptn_script.py
+  * traits are: N - neuroticism, A - agreeableness, O - openness, C - conscientiousness, E - extraversion
+  * methods are: CPM - connectome based predictive modelling, LR - linear regression, SVR - support vector regression
+  * predictions and MSE are returned in a format that is documented in ptn_script.py
 
