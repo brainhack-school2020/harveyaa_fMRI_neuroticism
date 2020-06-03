@@ -8,6 +8,7 @@ from sklearn.model_selection import LeaveOneOut
 from sklearn.linear_model import LinearRegression
 from sklearn.svm import SVR
 from sklearn.metrics import mean_squared_error
+import warnings
 
 #mat is shape n_subjectsXn_edges y is shape n_edges
 def correlate_edges(mat,y):
@@ -216,6 +217,8 @@ if __name__ == "__main__":
     parser.add_argument("--method",help="Prediction method, options: 'LR','CPM','SVR'.",dest='method') 
     args = parser.parse_args()
     
+    warnings.filterwarnings("ignore")
+    
     print('loading full data...')
     # connectivity matrices, 200x200 matrices in vector 810 subjects (shape 810x40000)
     netmats = np.loadtxt(args.netmats_file)
@@ -233,6 +236,6 @@ if __name__ == "__main__":
     
     print('writing data...')
     print('MSE ',MSE)
-    pd.DataFrame(columns = ['type','MSE']).to_csv('{}_{}_MSE.csv'.format(col_name,args.method))
+    pd.DataFrame(MSE, columns = ['type','MSE']).to_csv('{}_{}_MSE.csv'.format(col_name,args.method))
     #np.savetxt('{}_{}_edge_count.csv'.format(col_name,args.method),edge_count)
     np.savetxt('{}_{}_predictions.csv'.format(col_name,args.method),pred)
