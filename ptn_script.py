@@ -46,8 +46,8 @@ def filter_edges(correlations, thresh=0.01):
         correlations and p-value for each edge
         edge_corr[i,0] correlation
         edge_corr[i,1] p-value
-    y: ndarray (n_subjects,)
-        feature being predicted for each subject
+    thresh: float
+        p-value cut off for significance
     Returns
     -------
     sig_edges: list
@@ -84,6 +84,30 @@ def get_scores(mat, edges):
     return np.matmul(mat,mask)
 
 def leave_one_out_CPM(mat,y,thresh=0.01):
+    """
+    Do CPM prediction using leave one out strategy.
+    Inputs
+    -------
+    mat: ndarray (n_subjects,n_edges)
+        flattened connectivity matrix for each subject
+    y: ndarray (n_subjects,)
+        feature being predicted for each subject
+    Returns
+    -------
+    prediction: ndarray (n_subjects,4)
+        prediction for each subject based on different strategies
+        prediction[i,0] use all significantly correlated edges in combined score
+        prediction[i,1] use only significant positvely correlated edges for score
+        prediction[i,2] use only significant negatively correlated edges for score
+        prediction[i,3] use both sig. pos. and neg. scores in multiple regression
+    edge_count: ndarray (n_subjects,3)
+        number of times (max n_subjects) each edge was significantly correlated
+        edge_count[i,0] all significant edges
+        edge_count[i,1] positive edges
+        edge_count[i,2] negative edges
+    MSE: list
+        MSE for each strategy of prediction ordered as above
+    """
     n_subjects = mat.shape[0]
     n_edges = mat.shape[1]
 
@@ -145,6 +169,29 @@ def leave_one_out_CPM(mat,y,thresh=0.01):
     return prediction,edge_count,MSE
 
 def leave_one_out_LR(mat,y,thresh=0.01):
+    """
+    Fit a multiple regression model on selected edges as features using leave one out strategy.
+    Inputs
+    -------
+    mat: ndarray (n_subjects,n_edges)
+        flattened connectivity matrix for each subject
+    y: ndarray (n_subjects,)
+        feature being predicted for each subject
+    Returns
+    -------
+    prediction: ndarray (n_subjects,4)
+        prediction for each subject based on different strategies
+        prediction[i,0] use all significantly correlated edges
+        prediction[i,1] use only significant positvely correlated edges
+        prediction[i,2] use only significant negatively correlated edges
+    edge_count: ndarray (n_subjects,3)
+        number of times (max n_subjects) each edge was significantly correlated
+        edge_count[i,0] all significant edges
+        edge_count[i,1] positive edges
+        edge_count[i,2] negative edges
+    MSE: list
+        MSE for each strategy of prediction ordered as above
+    """
     n_subjects = mat.shape[0]
     n_edges = mat.shape[1]
 
@@ -200,6 +247,29 @@ def leave_one_out_LR(mat,y,thresh=0.01):
     return prediction,edge_count,MSE
 
 def leave_one_out_SVR(mat,y,thresh=0.01):
+    """
+    Fit an SVR model on selected edges as features using leave one out strategy.
+    Inputs
+    -------
+    mat: ndarray (n_subjects,n_edges)
+        flattened connectivity matrix for each subject
+    y: ndarray (n_subjects,)
+        feature being predicted for each subject
+    Returns
+    -------
+    prediction: ndarray (n_subjects,4)
+        prediction for each subject based on different strategies
+        prediction[i,0] use all significantly correlated edges
+        prediction[i,1] use only significant positvely correlated edges
+        prediction[i,2] use only significant negatively correlated edges
+    edge_count: ndarray (n_subjects,3)
+        number of times (max n_subjects) each edge was significantly correlated
+        edge_count[i,0] all significant edges
+        edge_count[i,1] positive edges
+        edge_count[i,2] negative edges
+    MSE: list
+        MSE for each strategy of prediction ordered as above
+    """
     n_subjects = mat.shape[0]
     n_edges = mat.shape[1]
 
