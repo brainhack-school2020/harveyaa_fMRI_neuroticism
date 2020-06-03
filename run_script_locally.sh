@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "now processing neuroticism"
-#python ptn_script.py --netmats_file=netmats2_clean.txt --traits_file=all_traits.csv --trait='N' --method='LR'
+python ptn_script.py --netmats_file=netmats2_clean.txt --traits_file=all_traits.csv --trait='N' --method='LR'
 python ptn_script.py --netmats_file=netmats2_clean.txt --traits_file=all_traits.csv --trait='N' --method='SVR'
 python ptn_script.py --netmats_file=netmats2_clean.txt --traits_file=all_traits.csv --trait='N' --method='CPM'
 
