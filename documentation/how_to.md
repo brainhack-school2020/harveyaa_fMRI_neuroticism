@@ -23,6 +23,7 @@ We need to restrict the behavioural data from all the subjects to the 812 in the
 * It will produce two files:
   * netmats2_clean.txt - the cleaned connectivity matrices
   * all_traits.csv - scores for all 5 personality traits ffor each subject with the data and their subjectIDs
+  
 Alternatively, all_traits.csv exists in this repo (although you will still need to download the PTN data from HCP) as well as the complete behavioural data from HCP as HCP_behavioural.csv.
 
 ## 3. Do some predictions:
