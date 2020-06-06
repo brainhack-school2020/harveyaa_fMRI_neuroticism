@@ -72,7 +72,11 @@ Here is an image of the networks that are correlated with neuroticism (note that
 * ptn_script.py - code to run the models and save the output files.
 * clean_data.py - code to remove the subjects with no behavioural data from HCP PTN recon2 download (see documentation/how_to.md)
 
-#### Deliverable 3: Documentation
+#### Deliverable 3: Bash script
+
+* run_script_locally.sh - executable to run script for all model comparisons we did on a local machine.
+
+#### Deliverable 4: Documentation
  
 * How to download the data from HCP
 * Details on how to run the code
