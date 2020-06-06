@@ -33,9 +33,9 @@ I would like to produce jupyter notebooks with examples of the analysis code, an
 
 ### Progress overview
 
-We started out working with preprocessed data from the HCP,and explored different ways of using parcellations and connectivity measured to produce connectivity matrices. A lot of time went into learning how to download and use data in this format, but the data is very large and was very challenging to work with. Through reading a lot of papers we eventually discovered that HCP data is much larger than average per subject (about an hour of scan each) and that they have published an even further processed data set of parcellations, time series, and connectivity matrices (PTN release). We decided to switch to this data set which allowed us to work with 810 subjects, which would have been impossible otherwise.
+We started out working with preprocessed data from the HCP,and explored different ways of using parcellations and connectivity measured to produce connectivity matrices. A lot of time went into learning how to download and use data in this format, but the data is very large and was very challenging to work with. Through reading papers (particularly [Dadi et al. 2019](https://www.sciencedirect.com/science/article/pii/S1053811919301594), and [Cai et al. 2020](https://academic.oup.com/scan/article/15/3/359/5815970)) we eventually discovered that HCP data is much larger than average per subject (about an hour of scan each) and that they have published an even further processed data set of parcellations, time series, and connectivity matrices (PTN release). We decided to switch to this data set which allowed us to work with 810 subjects, which would have been impossible otherwise.
 
-With the PTN data we focussed on predicting Neuroticism from the processed connectivity matrices, I tried a few linear models with leave one out cross validation and found that prediction was pretty terrible and Liz tried to improve on the prediction by using neural nets and tweaking parameters. 
+With the PTN data we focussed on predicting Neuroticism from the processed connectivity matrices, I tried [CPM](https://pubmed.ncbi.nlm.nih.gov/28182017/) and a few linear models with leave one out cross validation and found that prediction was pretty terrible and Liz tried to improve on the prediction by using neural nets and tweaking parameters. 
 
 To try different models, I rewrote jupyter notebooks that I used to write and test code as python scripts that could be used more efficiently to make comparisons. In the end we found that neuroticism and personality traits are very hard to predict from fMRI data and that one month is not very long to explore and compare the many many different options for processing fMRI data.
 
@@ -80,3 +80,18 @@ Here is an image of the networks that are correlated with neuroticism (note that
  
 ## Thank you!!
 Special thanks to Pierre Bellec, Desiree Lussier, Peer Herholz, Liz Izakson and everyone I got to chat with through clinics and groups! Brainhack school has been an amazing introduction to neuroimaging, I'm very grateful for everyone's time, help, ressources and encouragement!
+
+
+### References
+Cai et al. 2020 Robust Prediction of Individual Personality From Brain Functional Connectome 
+https://academic.oup.com/scan/article/15/3/359/5815970
+
+Dadi et al. 2019 Benchmarking functional connectome-based predictive models for resting-state fMRI https://www.sciencedirect.com/science/article/pii/S1053811919301594
+
+Moreau et al. 2020 The general impact of haploinsufficiency on brain connectivity underlies the pleiotropic effect of neuropsychiatric CNVs https://www.medrxiv.org/content/10.1101/2020.03.18.20038505v1
+
+Ormel et al. 2015 Neuroticism and Common Mental Disorders: Meaning and Utility of a Complex Relationship https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4382368/
+
+Shi et al. 2018 The Relationship Between Big Five Personality Traits and Psychotic Experience in a Large Non-clinical Youth Sample: The Mediating Role of Emotion Regulation https://www.frontiersin.org/articles/10.3389/fpsyt.2018.00648/full
+
+Shen et al. 2017 Using Connectome-Based Predictive Modeling to Predict Individual Behavior From Brain Connectivity https://pubmed.ncbi.nlm.nih.gov/28182017/
