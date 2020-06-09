@@ -76,7 +76,13 @@ Here is an image of the networks that are correlated with neuroticism (note that
 
 * run_script_locally.sh - executable to run script for all model comparisons we did on a local machine.
 
-#### Deliverable 4: Documentation
+#### Deliverable 4: Data visualization
+
+* figures/positive_connections.html - interactive version nilearn plot of connections positively correlated with neuroticism.
+* figures/negative_connections.html - the same for connections negatively correlated with neuroticism.
+* figues - other contents are scatter plots of real vs. predicted values for each trait (N, E, O, A, C) and each model (LR, SVR, CPM) as well as summaries of all three models for each trait.
+
+#### Deliverable 5: Documentation
  
 * How to download the data from HCP
 * Details on how to run the code
