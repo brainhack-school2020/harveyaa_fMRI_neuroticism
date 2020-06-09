@@ -12,7 +12,7 @@ if __name__ == "__main__":
     netmats = np.loadtxt(args.netmats_file)
 
     # behaviour from full HCP (~1200 subjects)
-    behaviour = pd.read_csv(args.traits_file)
+    behaviour = pd.read_csv(args.traits_file,index_col=0)
 
     # all subjects from recon2 in PTN release (n = 812)
     subjectIDs = np.loadtxt(args.subjectIDs_file)
