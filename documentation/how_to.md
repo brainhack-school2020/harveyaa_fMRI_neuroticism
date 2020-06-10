@@ -14,7 +14,7 @@ The netmats (connectivity matrices) data can be found under "HCP1200 Parcellatio
 
 ![PTN data](PTN.png)
 
-The data is documented [here](https://www.humanconnectome.org/storage/app/media/documentation/s1200/HCP1200-DenseConnectome+PTN+Appendix-July2017.pdf). We used netmats2.txt in our analysis since partial correlation has been documented to be better for prediction (Dadi et al. 2019).
+The data is documented [here](https://www.humanconnectome.org/storage/app/media/documentation/s1200/HCP1200-DenseConnectome+PTN+Appendix-July2017.pdf). The data is provided for several different resolutions of ICA, we used the 200 nodes resultion and netmats2.txt in our analysis since partial correlation has been documented to be better for prediction (Dadi et al. 2019).
 
 ## 2. Clean the data:
 We need to restrict the behavioural data from all the subjects to the 812 in the recon2 dataset we are using as well as drop 2 subjects in that dataset that don't have behavioural information.
