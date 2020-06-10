@@ -64,7 +64,7 @@ Here is an image of the networks that are correlated with neuroticism (note that
 
 #### Deliverable 1: Jupyter notebooks
 
- * ptn_pipeline.ipynb - walks through the python scripts and explain the code.
+ * ptn_pipeline.ipynb - explores the models and code in ptn_script.py.
  * data_viz.ipynb - uses the outputs from the python scripts to create figures with seaborn and nilearn plotting, the interactive nilearn plots are saved as .html files in the figures folder of this repo.
 
 #### Deliverable 2: Pyhon scripts
