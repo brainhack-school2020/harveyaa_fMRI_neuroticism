@@ -153,10 +153,10 @@ def leave_one_out_CPM(mat,y,thresh=0.01):
         mask[neg_edges,2]=1
         edge_count = edge_count + mask
 
-        prediction[i,0]=combined_model.predict(combined_scores_test)
-        prediction[i,1]=positive_model.predict(positive_scores_test)
-        prediction[i,2]=negative_model.predict(negative_scores_test)
-        prediction[i,3]=multiple_reg_model.predict(multiple_reg_scores_test)
+        prediction[test_index,0]=combined_model.predict(combined_scores_test)
+        prediction[test_index,1]=positive_model.predict(positive_scores_test)
+        prediction[test_index,2]=negative_model.predict(negative_scores_test)
+        prediction[test_index,3]=multiple_reg_model.predict(multiple_reg_scores_test)
         
         if (i%10 ==0): print('CPM fold: ',i)
         i = i+1
@@ -233,9 +233,9 @@ def leave_one_out_LR(mat,y,thresh=0.01):
         mask[neg_edges,2]=1
         edge_count = edge_count + mask
 
-        prediction[i,0]=significant_model.predict(significant_edges_test)
-        prediction[i,1]=positive_model.predict(positive_edges_test)
-        prediction[i,2]=negative_model.predict(negative_edges_test)
+        prediction[test_index,0]=significant_model.predict(significant_edges_test)
+        prediction[test_index,1]=positive_model.predict(positive_edges_test)
+        prediction[test_index,2]=negative_model.predict(negative_edges_test)
         
         if (i%10 ==0): print('Fold: ',i)
         i = i+1
@@ -311,9 +311,9 @@ def leave_one_out_SVR(mat,y,thresh=0.01):
         mask[neg_edges,2]=1
         edge_count = edge_count + mask
 
-        prediction[i,0]=significant_model.predict(significant_edges_test)
-        prediction[i,1]=positive_model.predict(positive_edges_test)
-        prediction[i,2]=negative_model.predict(negative_edges_test)
+        prediction[test_index,0]=significant_model.predict(significant_edges_test)
+        prediction[test_index,1]=positive_model.predict(positive_edges_test)
+        prediction[test_index,2]=negative_model.predict(negative_edges_test)
         
         if (i%10 ==0): print('Fold: ',i)
         i = i+1
